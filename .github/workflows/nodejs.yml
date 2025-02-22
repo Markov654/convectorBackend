@@ -1,0 +1,38 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main  # Или друг основен клон, например "master"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Можеш да го промениш на "windows-latest", ако предпочиташ Windows среда
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Можеш да промениш версията на Node.js, ако използваш друга версия
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+
+    - name: Lint code (по избор)
+      run: npm run lint  # Ако използваш линтинг (например ESLint)
+
+    - name: Build the project
+      run: npm run build  # Ако имаш build скрипт в package.json
+
+    - name: Deploy (по избор)
+      run: npm run deploy  # Ако имаш деплой скрипт
+ 
